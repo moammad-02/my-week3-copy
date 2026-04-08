@@ -1,14 +1,18 @@
-from flask import Flask, render_template
+# Use a lightweight Python image
+FROM python:3.11-slim
 
-app = Flask(__name__)
+# Set working directory
+WORKDIR /app
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# Copy requirements and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-@app.route('/edit')
-def edit():
-    return render_template('edit.html')
+# Copy the app code
+COPY . .
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+# Expose Flask port
+EXPOSE 5000
+
+# Run the Flask app
+CMD ["python", "app.py"]
