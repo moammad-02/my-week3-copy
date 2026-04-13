@@ -44,7 +44,7 @@ jobs:
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: mohammad
-          key: ${{ secrets.MOHAMMAD_SSH_KEY }}
+          key: ${{ secrets.A90L }}
           script: |
             cd /home/mohammad/week3_repo
 
