@@ -48,7 +48,7 @@ jobs:
           script: |
             cd /home/mohammad/week3_repo
 
-            echo "${{ secrets.MOHAMMAD_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            echo "${{ secrets.A90L }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
             docker compose down backend || true
             docker compose pull backend || true
