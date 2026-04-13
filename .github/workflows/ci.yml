@@ -41,8 +41,8 @@ jobs:
    steps:
     - name: Deploy locally
       run: |
-        cd /home/cybersecurity/Desktop/week3_repo
-          docker compose down || true
+        cd /home/cybersecurity/Desktop/week3_repo/project          
+        docker compose down || true
           docker compose up -d --build
       
             
