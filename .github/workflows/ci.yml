@@ -1,25 +1,55 @@
-name: CI - Docker App
+name: Deploy to backend
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: [self-hosted, cybersecurity]
 
+    permissions:
+      contents: read
+      packages: write
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Show files
-        run: ls -R
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: Build Docker image
-        run: docker build -t my-flask-app .
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.MOHAMMAD_TOKEN }}
 
-      - name: Run container
-        run: |
-          docker stop my-flask-app || true
-          docker rm my-flask-app || true
-          docker run -d -p 5000:5000 --name my-flask-app my-flask-app
+      - name: Build and Push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/mohammad-backend:latest
+
+  deploy:
+    runs-on: [self-hosted, cybersecurity]
+    needs: build
+
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: mohammad
+          key: ${{ secrets.MOHAMMAD_SSH_KEY }}
+          script: |
+            cd /home/mohammad/week3_repo
+
+            echo "${{ secrets.MOHAMMAD_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            docker compose down backend || true
+            docker compose pull backend || true
+            docker compose up -d backend
