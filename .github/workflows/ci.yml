@@ -25,7 +25,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.MOHAMMAD_TOKEN }}
+          password: ${{ secrets.A90L }}
 
       - name: Build and Push image
         uses: docker/build-push-action@v5
@@ -35,7 +35,7 @@ jobs:
           tags: ghcr.io/${{ github.repository_owner }}/mohammad-backend:latest
 
   deploy:
-    runs-on: [self-hosted, cybersecurity]
+    runs-on: [self-hosted,]
     needs: build
 
     steps:
