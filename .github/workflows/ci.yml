@@ -42,7 +42,7 @@ jobs:
     - name: Deploy locally
       run: |
         cd /home/cybersecurity/Desktop/week3_repo/project          
-        docker compose down || true
-          docker compose up -d --build
+        docker-compose down || true
+        docker-compose up -d --build
       
             
