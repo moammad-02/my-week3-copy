@@ -29,7 +29,7 @@ jobs:
       - name: Build and push Frontend
         uses: docker/build-push-action@v5
         with:
-          context: ./week3_repo/project
+          context: ./
           push: true
           tags: ghcr.io/moammad-02/week3_repo/project/templates:latest
 
