@@ -1,111 +1,36 @@
 name: Self-Hosted CI/CD
 
 on:
-
- 
-
   push:
-
- 
-
     branches: [ "main" ]
-
 jobs:
-
- 
-
   build-and-push:
-
- 
-
     runs-on: self-hosted
-
- 
-
     permissions:
-
- 
-
       contents: read
-
- 
-
       packages: write
-
     steps:
-
- 
-
       - name: Checkout code
-
- 
-
         uses: actions/checkout@v4
-
       - name: Log in to GitHub Container Registry
-
- 
-
         uses: docker/login-action@v3
-
- 
-
         with:
-
- 
-
           registry: ghcr.io
-
- 
-
           username: ${{ github.actor }}
-
- 
-
           password: ${{ secrets.A90L }}
 
       - name: Build and push Backend
-
- 
-
         uses: docker/build-push-action@v5
-
- 
-
         with:
-
- 
-
           context: ./
-
- 
-
           push: true
-
- 
-
           tags: ghcr.io/moammad-02/week3_repo/project:latest
 
       - name: Build and push Frontend
-
- 
-
         uses: docker/build-push-action@v5
-
- 
-
         with:
-
- 
-
           context: ./templates
-
- 
-
           push: true
-
- 
-
           tags: ghcr.io/moammad-02/week3_repo/project/templates:latest
 
   deploy:
@@ -122,8 +47,6 @@ jobs:
         run: |
            docker pull ghcr.io/bader3823/week3:latest && docker pull ghcr.io/moammad-02/week3_repo/project/templates:latest
            docker pull ghcr.io/bader3823/week3:latest && docker pull ghcr.io/moammad-02/week3_repo/project:latest
-
- 
 
       - name: Run new containers
         run: |
