@@ -29,7 +29,7 @@ jobs:
       - name: Build and push Frontend
         uses: docker/build-push-action@v5
         with:
-          context: ./templates
+          context: ./week3_repo/project
           push: true
           tags: ghcr.io/moammad-02/week3_repo/project/templates:latest
 
@@ -45,8 +45,8 @@ jobs:
 
       - name: Pull latest images
         run: |
-           docker pull ghcr.io/bader3823/week3:latest && docker pull ghcr.io/moammad-02/week3_repo/project/templates:latest
-           docker pull ghcr.io/bader3823/week3:latest && docker pull ghcr.io/moammad-02/week3_repo/project:latest
+           docker pull ghcr.io/moammad-02/week3_repo/project:latest && docker pull ghcr.io/moammad-02/week3_repo/project/templates:latest
+           docker pull ghcr.io/moammad-02/week3_repo/project:latest && docker pull ghcr.io/moammad-02/week3_repo/project:latest
 
       - name: Run new containers
         run: |
