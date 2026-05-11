@@ -4,19 +4,17 @@ on:
   push:
     branches: [ "main" ]
 jobs:
-  
   hadolint:
     runs-on: self-hosted
 
     steps:
-      - name: Run Hadolint on all existing Dockerfiles
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run Hadolint
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
-         
-          recursive: true
+      - name: Run Hadolint on all existing Dockerfiles
+        run: |
+   
+          find . -name "Dockerfile" -exec /usr/local/bin/hadolint {} +
 
   build-and-push:
     needs: hadolint
