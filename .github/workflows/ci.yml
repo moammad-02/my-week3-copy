@@ -9,12 +9,13 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout code
+      - name: Run Hadolint on all existing Dockerfiles
         uses: actions/checkout@v4
 
       - name: Run Hadolint
         uses: hadolint/hadolint-action@v3.1.0
         with:
+          dockerfile: "**/Dockerfile"
           recursive: true
 
   build-and-push:
