@@ -15,7 +15,7 @@ jobs:
       - name: Run Hadolint
         uses: hadolint/hadolint-action@v3.1.0
         with:
-          dockerfile: week3_repo/Dockerfile
+          recursive: true
 
   build-and-push:
     needs: hadolint
